@@ -38,7 +38,7 @@
       flex-direction: column;
     }
 
-    /* Top Sticky Header */
+    /* Sticky Header */
     header {
       background: white;
       border-bottom: 1px solid var(--neutral-200);
@@ -159,7 +159,7 @@
     .view-panel { display: none; }
     .view-panel.active { display: block; }
 
-    /* Card Styling */
+    /* Card */
     .card {
       background: white;
       border-radius: var(--radius);
@@ -188,7 +188,7 @@
       padding: 16px;
     }
 
-    /* Form Grids & Inputs */
+    /* Form Grid */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -244,7 +244,7 @@
       min-height: 80px;
     }
 
-    /* Checkbox & Radio lists matching the Bakan Form */
+    /* Checklists */
     .checklist-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -278,7 +278,7 @@
       cursor: pointer;
     }
 
-    /* Severity radio cards (Levels 0 - 3) */
+    /* Severity radio cards */
     .severity-container {
       display: grid;
       grid-template-columns: 1fr;
@@ -369,7 +369,7 @@
     .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
     .alert-success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; }
 
-    /* Dashboard Metrics */
+    /* Metrics Grid */
     .metric-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -425,7 +425,7 @@
     tr:last-child td { border-bottom: none; }
     tr:hover td { background-color: #fafbfc; }
 
-    /* Detail Modal */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -477,7 +477,7 @@
       white-space: pre-line;
     }
 
-    /* Print Formatting */
+    /* Print Styles */
     @media print {
       header, .tab-bar, .metric-grid, .no-print, button {
         display: none !important;
@@ -521,55 +521,9 @@
   <!-- Google Apps Script URL Constant -->
   <script>
     // =========================================================================
-    // ⚙️ GOOGLE APPS SCRIPT WEB APP INTEGRATION
-    // Deploy a Google Apps Script as Web App (Execute as: Me, Access: Anyone)
-    // and paste the Web App URL below:
+    // ⚙️ GOOGLE APPS SCRIPT WEB APP INTEGRATION (HARDCODED ENDPOINT)
     // =========================================================================
-    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYOUR_DEPLOYED_ID_HERE/exec";
-
-    /*
-    -------------------------------------------------------------------------
-    SAMPLE GOOGLE APPS SCRIPT CODE (Paste in Extensions > Apps Script):
-    -------------------------------------------------------------------------
-    function doGet(e) {
-      var lock = LockService.getScriptLock();
-      lock.tryLock(10000);
-      try {
-        var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-        if (sheet.getLastRow() === 0) {
-          sheet.appendRow([
-            "Incident ID", "Submission Timestamp", "Incident Date & Time",
-            "Ward/Room", "Patient Name", "Age", "Sex", "Patient ID/IPD",
-            "Diagnosis", "Incident Types", "Severity Level",
-            "Description", "Immediate Action", "Reporter Name",
-            "Reporter Role", "Synced Timestamp"
-          ]);
-        }
-        var raw = e.parameter.data;
-        if (raw) {
-          var d = JSON.parse(raw);
-          sheet.appendRow([
-            d.id, d.submitted_at, d.incident_date,
-            d.department, d.patient_name || "", d.patient_age || "",
-            d.patient_sex || "", d.patient_id || "", d.patient_diag || "",
-            (d.incident_types || []).join(", "), d.severity,
-            d.description, d.immediate_action, d.reporter_name || "Anonymous",
-            d.reporter_role || "", new Date().toISOString()
-          ]);
-          return ContentService.createTextOutput(JSON.stringify({status: "ok", id: d.id}))
-            .setMimeType(ContentService.MimeType.JSON);
-        }
-        return ContentService.createTextOutput(JSON.stringify({status: "empty"}))
-          .setMimeType(ContentService.MimeType.JSON);
-      } catch(err) {
-        return ContentService.createTextOutput(JSON.stringify({status: "error", error: err.toString()}))
-          .setMimeType(ContentService.MimeType.JSON);
-      } finally {
-        lock.releaseLock();
-      }
-    }
-    -------------------------------------------------------------------------
-    */
+    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIqLDpetXW1Ho6cmCNQfY92WccEJc874jzdl97-mNyrFS_snd-tNNoLyqtRr0oMfRraA/exec";
   </script>
 
   <!-- Sticky Header -->
@@ -626,7 +580,7 @@
     <section id="panelForm" class="view-panel active">
       <form id="incidentForm" onsubmit="handleSubmit(event)">
 
-        <!-- Section I: ព័ត៌មានទូទៅ (General Information) -->
+        <!-- Section I: General Information -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">
@@ -701,7 +655,7 @@
           </div>
         </div>
 
-        <!-- Section II: ប្រភេទឧប្បត្តិហេតុ / កំហុសឆ្គង (Type of Incident / Error) -->
+        <!-- Section II: Incident / Error Type -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">
@@ -765,7 +719,7 @@
           </div>
         </div>
 
-        <!-- Section III: កម្រិតនៃផលប៉ះពាល់ / គ្រោះថ្នាក់ (Severity of Harm) -->
+        <!-- Section III: Severity of Harm -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">
@@ -816,7 +770,7 @@
           </div>
         </div>
 
-        <!-- Section IV & V: ការពិពណ៌នា & ចំណាត់ការភ្លាមៗ -->
+        <!-- Section IV & V: Description & Actions -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">
@@ -843,7 +797,7 @@
           </div>
         </div>
 
-        <!-- Section VI: ព័ត៌មានអ្នករាយការណ៍ (Reporter Information) -->
+        <!-- Section VI: Reporter Information -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">
@@ -910,7 +864,7 @@
         </div>
       </div>
 
-      <!-- Filters & Actions Card -->
+      <!-- Filters & Actions -->
       <div class="card no-print">
         <div class="card-header">
           <span class="card-title">
@@ -963,7 +917,7 @@
         </div>
       </div>
 
-      <!-- Incident Log Table -->
+      <!-- Incident Registry Table -->
       <div class="card">
         <div class="card-header">
           <span class="card-title">
@@ -1371,7 +1325,7 @@
 
     // Sync via GET to Google Apps Script
     async function syncIncidentToGoogle(incident) {
-      if (!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_ID_HERE")) {
+      if (!GOOGLE_APPS_SCRIPT_URL) {
         console.warn("GAS URL not set yet. Stored safely offline.");
         return false;
       }
